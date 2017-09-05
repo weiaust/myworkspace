@@ -29,7 +29,7 @@ ssh-keygen -t rsa -C “you@example.com”
  出现Hi weiaust! You've successfully authenticated, but GitHub does not provide shell access.
 等说明能成功连接到GitHub。
 2.（将本地仓库递交到远程仓库）将本地仓库和远程仓库建立连接：
-git remote add origin git@github.com:wylhyz/learngit.git
+git remote add origin git@github.com:weiaust/myworkspace.git
 origin是远程仓库在本地别名，你可以自由取，git链接是在建立远程仓库时要你记下的ssh连接。此句就是在本地建立远程仓库别名并链接到远程仓库。
 3.然后直接使用如下命令就可以将更改上传了：
 git push -u origin master
