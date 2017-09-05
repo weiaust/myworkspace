@@ -1,0 +1,37 @@
+一、建立本地仓库git bash
+1.在需要创建的本地仓库路径下 git init
+2.运行以下命令，写入用户名和邮箱
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+3.讲文件及文件夹放入仓库中，并使用以下命令提交到工作区
+  git add .
+4.运行以下命令，将工作区的内容提交到本地仓库中
+  git commit -a -m "comment"
+
+二、本地生成SSH秘钥git bash
+1.查看是否已经有了ssh密钥：cd ~/.ssh
+如果没有密钥则不会有此文件夹，有则备份删除
+2.生成密钥：
+ssh-keygen -t rsa -C “you@example.com”
+按3个回车，密码为空。
+在系统user文件夹下生成.ssh文件夹，里面有两个文件id_rsa和id_rsa.pub
+
+三、以下建立GIThub仓库
+1.在Github上申请账号，并创建仓库，repository(注意，此处的仓库名不一定需要和本地仓库名相同。)
+2.记住创建成功的SSH链接，（最好ssh,html不太常用）
+3.在设置中找到添加SSH keys的位置，并新增，输入title（随便），秘钥为本地生成的id_rsa.pub中的内容。
+ 之后点击添加即可。注意添加成功后会邮件通知你（你是指github注册邮箱持有人）。
+ 
+ 四、将本地和GIThub关联起来git bash
+ 1.检测是否能够ssh连接github
+ ssh -T git@github.com
+ 可能会出现警告，不要管他，输入的密码是你建立密钥时候的密码。
+ 出现Hi weiaust! You've successfully authenticated, but GitHub does not provide shell access.
+等说明能成功连接到GitHub。
+2.（将本地仓库递交到远程仓库）将本地仓库和远程仓库建立连接：
+git remote add origin git@github.com:wylhyz/learngit.git
+origin是远程仓库在本地别名，你可以自由取，git链接是在建立远程仓库时要你记下的ssh连接。此句就是在本地建立远程仓库别名并链接到远程仓库。
+3.然后直接使用如下命令就可以将更改上传了：
+git push -u origin master
+需要密码验证的时候输入密钥密码就好。
+ 
