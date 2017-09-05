@@ -1,0 +1,2 @@
+HTTP: https://github.com/weiaust/myworkspace.git
+SSH：git@github.com:weiaust/myworkspace.git
