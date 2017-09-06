@@ -36,6 +36,63 @@ git push -u origin master
 需要密码验证的时候输入密钥密码就好。
  
  
-五、远程仓库内容克隆到本地
+五、远程仓库内容克隆到本地（一般用于新开始工程）
 git clone git@github.com:weiaust/myworkspace.git   mygit
 mygit 为本地存放的名称
+
+
+六、远程仓库内容同步到本地仓库
+git fetch +git merge/git rebase  或者git pull
+Git fetch 用法：
+git fetch <远程主机名> <分支名>
+一旦远程主机的版本库有了更新（Git术语叫做commit），需要将这些更新取回本地，这时就要用到git fetch命令。
+git fetch命令通常用来查看其他人的进程，因为它取回的代码对你本地的开发代码没有影响
+所取回的更新，在本地主机上要用"远程主机名/分支名"的形式读取。比如origin主机的master，就要用origin/master读取。
+git branch命令的-r选项，可以用来查看远程分支，-a选项查看所有分支。
+
+使用git merge命令或者git rebase命令，在本地分支上合并远程分支。
+git merge test_hub/master
+或者
+git rebase test_hub/master
+表示在当前分支上，合并test_hub/master
+
+此外，取回远程主机的更新以后，可以在它的基础上，使用git checkout命令创建一个新的分支。
+如：
+git checkout -b newBrach test_hub/master
+
+
+git pull 用法：
+git pull <远程主机名> <远程分支名>:<本地分支名>
+git pull命令的作用是，取回远程主机某个分支的更新，再与本地的指定分支合并。
+如果远程分支是与当前分支合并，则冒号及其后面的部分可以省略。
+git pull test_hub master:master
+上面命令表示，取回test_hub/master分支，再与当前分支合并。实质上，这等同于先做git fetch，再做git merge。
+
+在某些场合，Git会自动在本地分支与远程分支之间，建立一种追踪关系（tracking）。
+比如，在git clone的时候，所有本地分支默认与远程主机的同名分支，建立追踪关系，也就是说，本地的master分支自动"追踪"origin/master分支。
+
+Git也允许手动建立追踪关系。
+git branch --set-upstream master test_hub/master
+上面命令指定master分支追踪test_hub/master分支。
+如果当前分支与远程分支存在追踪关系，git pull就可以省略远程分支名。
+如果当前分支只有一个追踪分支，连远程主机名都可以省略。直接git pull即可实现当前分支自动与唯一一个追踪分支进行合并。
+
+
+七、本地更新推送到远程主机
+git push命令用于将本地分支的更新，推送到远程主机。它的格式与git pull命令相仿。
+git push <远程主机名> <本地分支名>:<远程分支名>
+注意，分支推送顺序的写法是<来源地>:<目的地>，所以git pull是<远程分支>:<本地分支>，而git push是<本地分支>:<远程分支>。
+如果省略远程分支名，则表示将本地分支推送与之存在"追踪关系"的远程分支（通常两者同名），如果该远程分支不存在，则会被新建。
+如果省略本地分支名，则表示删除指定的远程分支，因为这等同于推送一个空的本地分支到远程分支。
+git push origin :master
+# 等同于
+git push origin --delete master  表示删除origin主机的master分支
+
+如果当前分支与远程分支之间存在追踪关系，则本地分支和远程分支都可以省略。
+如果当前分支只有一个追踪分支，那么主机名都可以省略。
+如果当前分支与多个主机存在追踪关系，则可以使用-u选项指定一个默认主机，这样后面就可以不加任何参数使用git push。
+git push -u origin master
+上面命令将本地的master分支推送到origin主机，同时指定origin为默认主机，后面就可以不加任何参数使用git push了。
+
+不带任何参数的git push，默认只推送当前分支，这叫做simple方式。此外，还有一种matching方式，会推送所有有对应的远程分支的本地分支。
+Git 2.0版本之前，默认采用matching方法，现在改为默认采用simple方式。如果要修改这个设置，可以采用git config命令。
