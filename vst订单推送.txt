@@ -1,0 +1,29 @@
+
+
+eventType
+	ORDER_PAYMENT// 支付成功    orderId    					OK  
+	ORDER_RES_PASS	// 资源审核通过orderId					OK  supplie_name出现过丢失 ，order_item_meta_payed_amount多了1，其实是0.01
+	ORDER_INFO_PASS	// 信息审核通过orderId					
+	ORDER_APPORTION// 分摊成功orderId
+	ORDER_CANCEL// 订单取消orderId							NA --- 取消订单，没有自动推状态，没法和手动推送对对比
+	ORDER_REFUND// 订单退款refundId							NA --- 订单退款，没有自动推状态，没法和手动推送对对比
+	SETTLE_PRICE_CHANGE// 结算价变动orderItemId				OK    supplie_name出现过丢失
+	MANUAL_CREATE_SETTLEMENT// 手动生成结算单orderItemId	
+ --  下面只推送个别字段
+	PASSCODE_APPLIED// 通关码申请通过orderItemId
+	ORDER_PERFORMED// 订单履行orderItemId
+	PRICE_STATUS_CHANGE// 价格状态变动orderItemId
+	
+	
+	
+ORDER_PAYMENT_MSG(OrderPaymentEventHandler.class), 				// 支付成功  OK  62966778 
+ORDER_RESOURCE_MSG(OrderPaymentEventHandler.class), 			// 资源审核通过				资源审核不自动推送状态了，62966789
+ORDER_INFOPASS_MSG(OrderPaymentEventHandler.class), 			// 信息审核通过
+ORDER_APPORTION_SUCCESS_MSG(OrderPaymentEventHandler.class), 	// 分摊成功
+ORDER_CANCEL_MSG(OrderCancelEventHandler.class), 				// 订单取消				OK	62966792
+ORDER_REFUNDED_MSG(OrderRefundEventHandler.class), 				// 订单退款				OK	62966802   status 手动为noraml ,notify_state  没有传送success的状态，显示null
+ORDER_MODIFY_SETTLEMENT_PRICE_MSG(OrderPriceChangeEventHandler.class),		// 结算价变动		OK  62966821   clear_date自动推送的状态有问题
+ORDER_ITEM_SETTLE_MSG(OrderItemSettleHandler.class),			// 手动生成结算单
+PASSCODE_APPLY_NOTIFY(OrderPasscodeApplyNotifyHandler.class),		// 通关码申请通过
+ITEM_PERFROM_SETTLE_MSG(OrderItemPerformSettleHandler.class),		// 订单履行
+ORDITEM_PRICE_STATUS_CHANGE_MSG(OrderSetPriceConfirmHandler.class);	// 价格状态变动
